@@ -32,6 +32,13 @@ public class Entity {
         }
         return null;
     }
+    //has component
+    public <C extends Component> boolean hasComponent(Class<C> componentClass) {
+        if (components.containsKey(componentClass)) {
+            return true;
+        }
+        return false;
+    }
 
     // Remove component
     public <C extends Component> void remove(Class<C> componentClass) {

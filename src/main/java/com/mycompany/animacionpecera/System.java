@@ -12,6 +12,7 @@ import java.util.List;
  */
 public abstract class System {
     
-    public abstract void update (List lista, double deltaTime);
+    public abstract void update (List<Entity> entities, double deltaTime);
+   
     
 }
