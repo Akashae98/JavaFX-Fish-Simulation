@@ -19,15 +19,16 @@ public class MovementSystem extends System {
 
                 VelocityComponent velocity = entity.getComponent(VelocityComponent.class);
                 PositionComponent positionCom = entity.getComponent(PositionComponent.class);
-
+                //To move:
                 Position newPosition = new Position(
                         positionCom.position.x() + velocity.velX * deltaTime,
                         positionCom.position.y() + velocity.velY * deltaTime
                 );
-
-                // Update the PositionComponent with the new Position
+                //update the PositionComponent with the new Position
                 positionCom.position = newPosition;
+
             }
+            //To collide or rotate..
 
         }
     }

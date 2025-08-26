@@ -58,7 +58,7 @@ public class GameLoop extends AnimationTimer {
 
         // clamping delta
         if (deltaTime > FRAME_SKIP_THRESHOLD && DebugUtil.isDebugging()) {
-            System.out.println("Skipping frame: " + deltaTime);
+            //System.out.println("Skipping frame: " + deltaTime);
             lastUpdate = now;
             return;
         }

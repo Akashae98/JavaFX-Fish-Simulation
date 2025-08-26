@@ -5,6 +5,8 @@
 package com.mycompany.animacionpecera;
 
 import java.util.List;
+import javafx.scene.canvas.GraphicsContext;
+
 
 /**
  *
@@ -12,9 +14,34 @@ import java.util.List;
  */
 public class RenderSystem extends System {
 
-    @Override
-    public void update(List lista, double deltaTime) {
-       
+    private GraphicsContext gc;
+
+    public RenderSystem(GraphicsContext gc) {
+        this.gc = gc;
     }
-    
+
+    @Override
+    public void update(List<Entity> entities, double deltaTime) {
+
+        for (Entity entity : entities) {
+            if (entity.hasComponent(PositionComponent.class)
+                    && entity.hasComponent(SpriteComponent.class)) {
+
+                PositionComponent pos = entity.getComponent(PositionComponent.class);
+                SpriteComponent sprite = entity.getComponent(SpriteComponent.class);
+                //save gc state
+                gc.save();
+                
+                gc.rotate(sprite.rotation);
+                
+                gc.drawImage(sprite.image, pos.position.x(), pos.position.y(),
+                        sprite.getWidth(), sprite.getHeight());
+                //restore previous gc state
+                gc.restore();
+
+            }
+        }
+
+    }
+
 }
