@@ -10,10 +10,10 @@ package com.mycompany.animacionpecera;
  */
 public class VelocityComponent extends Component{
     
-    public float velX;
-    public float velY;
+    public double velX;
+    public double velY;
     
-    public VelocityComponent(float velX, float velY) {
+    public VelocityComponent(double velX, double velY) {
         this.velX = velX;
         this.velY = velY;
     }

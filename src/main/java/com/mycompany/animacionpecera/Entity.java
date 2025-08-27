@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class Entity {
 
     //hashmap of components:
-    //the key is the type of component and the valuethe instance.
+    //the key is the type of component and the value the instance.
     private HashMap<Class<? extends Component>, Component> components;
 
     public Entity() {
@@ -32,12 +32,10 @@ public class Entity {
         }
         return null;
     }
+    
     //has component
     public <C extends Component> boolean hasComponent(Class<C> componentClass) {
-        if (components.containsKey(componentClass)) {
-            return true;
-        }
-        return false;
+        return components.containsKey(componentClass);
     }
 
     // Remove component

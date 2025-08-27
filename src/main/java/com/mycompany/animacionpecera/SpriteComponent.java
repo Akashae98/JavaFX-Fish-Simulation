@@ -15,14 +15,15 @@ public class SpriteComponent extends Component {
     public Image image;
     public double size;
     public double rotation;
+    public boolean flip = false;
 
     public SpriteComponent(String imagePath, double size) {
         this.image = new Image(getClass().getResourceAsStream(imagePath));
         this.size = size;
     }
 
-    public void rotate(double degrees) {
-        this.rotation += degrees;
+    public void setRotation(double degrees) {
+        this.rotation = degrees;
     }
 
     public double getWidth() {

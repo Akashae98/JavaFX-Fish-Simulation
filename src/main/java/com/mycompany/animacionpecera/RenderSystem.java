@@ -6,7 +6,7 @@ package com.mycompany.animacionpecera;
 
 import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
-
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -31,12 +31,18 @@ public class RenderSystem extends System {
                 SpriteComponent sprite = entity.getComponent(SpriteComponent.class);
                 //save gc state
                 gc.save();
-                
+
+                // translate to the center fro rotation
+                gc.translate(pos.position.x(), pos.position.y());
                 gc.rotate(sprite.rotation);
-                
-                gc.drawImage(sprite.image, pos.position.x(), pos.position.y(),
-                        sprite.getWidth(), sprite.getHeight());
-                //restore previous gc state
+
+                if (sprite.flip) {
+                    gc.scale(-1, 1);
+                }
+
+                gc.drawImage(sprite.image, -sprite.getWidth() / 2,
+                        -sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
+
                 gc.restore();
 
             }
