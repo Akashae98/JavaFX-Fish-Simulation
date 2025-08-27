@@ -21,6 +21,9 @@ public class GameLoop extends AnimationTimer {
     private final GraphicsContext gc;
     private final Canvas canvas;
     private final List<SceneObject> sceneObjectList;
+    List<Entity> entities;
+    MovementSystem mov;
+    RenderSystem render;
     private boolean showBox;
     private boolean running = true;
 
@@ -33,11 +36,14 @@ public class GameLoop extends AnimationTimer {
     private double fps;
     private double msPerFrame;
 
-    // Constructor
-    public GameLoop(GraphicsContext gc, Canvas canvas, List<SceneObject> sceneObjectList) {
+    //Constructor
+    public GameLoop(GraphicsContext gc, Canvas canvas, List<SceneObject> sceneObjectList, List<Entity> entities, MovementSystem mov, RenderSystem render) {
         this.gc = gc;
         this.canvas = canvas;
         this.sceneObjectList = sceneObjectList;
+        this.entities = entities;
+        this.mov = mov;
+        this.render = render;
     }
 
     @Override
@@ -77,6 +83,10 @@ public class GameLoop extends AnimationTimer {
 
         // Cap FPS to 60 (max 16.67 ms/frame)
         capFrameRate(now);
+        
+        //ECS
+        mov.update(entities, deltaTime);
+        render.update(entities, deltaTime);
     }
 
     private void updateGameLogic(double deltaTime) {
