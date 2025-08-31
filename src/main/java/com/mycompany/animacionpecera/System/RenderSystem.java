@@ -4,7 +4,7 @@
  */
 package com.mycompany.animacionpecera.System;
 
-import com.mycompany.animacionpecera.Bubble;
+import com.mycompany.animacionpecera.Components.Bubble;
 import com.mycompany.animacionpecera.Components.SpriteComponent;
 import com.mycompany.animacionpecera.Entity;
 import com.mycompany.animacionpecera.Components.Transform;
@@ -26,6 +26,7 @@ public class RenderSystem extends GameSystem {
     private final GraphicsContext gc;
     private final Canvas canvas;
     private final Paint background;
+    private double time = 0;
 
     public RenderSystem(Canvas canvas) {
         this.canvas = canvas;
@@ -34,6 +35,7 @@ public class RenderSystem extends GameSystem {
         this.background = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
                 new Stop(0, Color.rgb(127, 240, 220)),
                 new Stop(1, Color.rgb(70, 130, 180)));
+
     }
 
     @Override
@@ -42,11 +44,63 @@ public class RenderSystem extends GameSystem {
         gc.setFill(background);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
+        // Paint SOLAR RAYS
+        time += deltaTime; // Increase accumulated time
+        gc.save();
+        gc.setGlobalAlpha(0.15); //semi-transparency
+
+        int numRays = 13;
+        for (int i = 0; i < numRays; i++) {
+            // Base position 
+            double startX = canvas.getWidth() - (i * 120);
+
+            // Length (varies per ray)
+            double rayLength = canvas.getHeight() * (0.5 + 0.5 * (i / (double) numRays));
+
+            // Smooth left drift at the bottom 
+            double drift = -100 - i * 20 + Math.sin(time * 0.5 + i) * 30;
+
+            // Base width (straight rays at the top, wider at bottom)
+            double baseWidth = 20 + (i * 10);
+
+            // Add shimmer to width (slow breathing effect)
+            double shimmer = Math.sin(time * 0.7 + i) * 15;
+
+            double topWidth = baseWidth * 0.4;
+            double bottomWidth = baseWidth + shimmer; // slowly changing
+
+            // Polygon points 
+            double[] xPoints = {
+                startX, // top-left
+                startX + topWidth, // top-right
+                startX + drift + bottomWidth, // bottom-right
+                startX + drift // bottom-left
+            };
+            double[] yPoints = {
+                0, // top
+                0, // top
+                rayLength, // bottom
+                rayLength // bottom
+            };
+            
+            // Vertical gradient for the ray
+            LinearGradient rayGradient = new LinearGradient(
+                    0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
+                    new Stop(0.0, Color.rgb(255, 255, 255, 0.35)), // bright at top
+                    new Stop(1.0, Color.TRANSPARENT) // transparency
+            );
+
+            // Draw the ray as a rectangle filled with gradient
+            gc.setFill(rayGradient);
+            gc.fillPolygon(xPoints, yPoints, 4);
+        }
+
+        gc.restore();
+
         //paint entities
         for (Entity entity : entities) {
             Transform transform = entity.getComponent(Transform.class);
             SpriteComponent sprite = entity.getComponent(SpriteComponent.class);
-            
             //a white circle to highlight the bubbles..?
             if (entity.hasComponent(Bubble.class)) {
                 gc.setFill(Color.rgb(255, 255, 255, 0.3)); //white color semitransparent
@@ -55,7 +109,7 @@ public class RenderSystem extends GameSystem {
                 gc.setStroke(Color.rgb(255, 255, 255, 0.5));//white color for the bubble edge
                 gc.strokeOval(transform.getX() - sprite.getWidth() / 2,
                 transform.getY() - sprite.getWidth() / 2, sprite.getWidth(), sprite.getWidth());//fills with color
-            }          
+            }
             if (entity.hasComponent(Transform.class) && entity.hasComponent(SpriteComponent.class)) {
                 //save gc state
                 gc.save();
