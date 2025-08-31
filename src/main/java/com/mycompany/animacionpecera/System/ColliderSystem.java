@@ -7,7 +7,7 @@ package com.mycompany.animacionpecera.System;
 import com.mycompany.animacionpecera.Components.VelocityComponent;
 import com.mycompany.animacionpecera.Components.ColliderComponent;
 import com.mycompany.animacionpecera.Components.SpriteComponent;
-import com.mycompany.animacionpecera.Bubble;
+import com.mycompany.animacionpecera.Components.Bubble;
 import com.mycompany.animacionpecera.Entity;
 import com.mycompany.animacionpecera.Components.Transform;
 import java.util.List;

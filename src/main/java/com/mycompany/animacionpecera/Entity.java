@@ -4,6 +4,7 @@
  */
 package com.mycompany.animacionpecera;
 
+import com.mycompany.animacionpecera.Components.Component;
 import java.util.HashMap;
 
 /**
@@ -14,7 +15,7 @@ public class Entity {
 
     //hashmap of components:
     //the key is the type of component and the value the instance.
-    private HashMap<Class<? extends Component>, Component> components;
+    private final HashMap<Class<? extends Component>, Component> components;
 
     public Entity() {
         this.components = new HashMap<>();
