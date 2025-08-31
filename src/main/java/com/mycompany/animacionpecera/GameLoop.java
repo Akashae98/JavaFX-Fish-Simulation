@@ -4,6 +4,7 @@
  */
 package com.mycompany.animacionpecera;
 
+import com.mycompany.animacionpecera.System.GameSystem;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -20,10 +21,8 @@ public class GameLoop extends AnimationTimer {
 
     private final GraphicsContext gc;
     private final Canvas canvas;
-    private final List<SceneObject> sceneObjectList;
     List<Entity> entities;
-    MovementSystem mov;
-    RenderSystem render;
+    List<GameSystem> systems;
     private boolean showBox;
     private boolean running = true;
 
@@ -37,13 +36,11 @@ public class GameLoop extends AnimationTimer {
     private double msPerFrame;
 
     //Constructor
-    public GameLoop(GraphicsContext gc, Canvas canvas, List<SceneObject> sceneObjectList, List<Entity> entities, MovementSystem mov, RenderSystem render) {
-        this.gc = gc;
+    public GameLoop(Canvas canvas, List<Entity> entities,List<GameSystem> systems) {
+        this.gc = canvas.getGraphicsContext2D();
         this.canvas = canvas;
-        this.sceneObjectList = sceneObjectList;
         this.entities = entities;
-        this.mov = mov;
-        this.render = render;
+        this.systems= systems;
     }
 
     @Override
@@ -64,16 +61,16 @@ public class GameLoop extends AnimationTimer {
 
         // clamping delta
         if (deltaTime > FRAME_SKIP_THRESHOLD && DebugUtil.isDebugging()) {
-            //System.out.println("Skipping frame: " + deltaTime);
+            System.out.println("Skipping frame: " + deltaTime);
             lastUpdate = now;
             return;
         }
 
         // Logic
-        updateGameLogic(deltaTime);
+        //updateGameLogic(deltaTime);
 
         // Rendering
-        renderScene(deltaTime);
+        //renderScene(deltaTime);
 
         // Updates fps stats
         updateFpsStats(deltaTime);
@@ -85,17 +82,16 @@ public class GameLoop extends AnimationTimer {
         capFrameRate(now);
         
         //ECS
-        mov.update(entities, deltaTime);
-        render.update(entities, deltaTime);
+        update(deltaTime);
     }
 
-    private void updateGameLogic(double deltaTime) {
-        for (SceneObject object : sceneObjectList) {
-            object.move(deltaTime);
+    private void update(double deltaTime) {
+        for (GameSystem system : systems) {
+            system.update(entities, deltaTime);
         }
     }
 
-    private void renderScene(double deltaTime) {
+    /*private void renderScene(double deltaTime) {
         // Gradient background simulates water 
         LinearGradient background = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
                 new Stop(0, Color.rgb(127, 240, 220)),
@@ -107,7 +103,7 @@ public class GameLoop extends AnimationTimer {
         for (SceneObject object : sceneObjectList) {
             object.draw(gc, showBox, deltaTime);
         }
-    }
+    }*/
 
     private void updateFpsStats(double deltaTime) {
         elapsedTime += deltaTime;
