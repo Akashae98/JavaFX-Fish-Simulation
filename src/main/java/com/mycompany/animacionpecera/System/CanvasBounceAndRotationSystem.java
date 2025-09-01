@@ -16,11 +16,11 @@ import java.util.List;
  *
  * @author carol
  */
-public class ColliderSystem extends GameSystem {
+public class CanvasBounceAndRotationSystem extends GameSystem {
 
     private double canvasWidth, canvasHeight;
 
-    public ColliderSystem(double canvasWidth, double canvasHeight) {
+    public CanvasBounceAndRotationSystem(double canvasWidth, double canvasHeight) {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
     }

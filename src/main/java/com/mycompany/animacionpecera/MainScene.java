@@ -10,7 +10,7 @@ import com.mycompany.animacionpecera.Components.VelocityComponent;
 import com.mycompany.animacionpecera.Components.ColliderComponent;
 import com.mycompany.animacionpecera.Components.SpriteComponent;
 import com.mycompany.animacionpecera.Components.Transform;
-import com.mycompany.animacionpecera.System.ColliderSystem;
+import com.mycompany.animacionpecera.System.CanvasBounceAndRotationSystem;
 import com.mycompany.animacionpecera.System.GameSystem;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -35,7 +35,6 @@ public class MainScene extends Application {
     public static final int canvasHeight = 780;
     public static final Random random = new Random();
 
-    private GraphicsContext gc; //Graphic context to draw in the canvas
     BoundingBox canvasBox = new BoundingBox(new Position(0, 0), new Position(canvasWidth, 0),
             new Position(canvasWidth, canvasHeight), new Position(0, canvasHeight));
     List<Entity> entities = new ArrayList<>();
@@ -54,16 +53,14 @@ public class MainScene extends Application {
         // Canvas habilitates to draw
         Canvas canvas = new Canvas(canvasWidth, canvasHeight);
 
-        //gc its the brush to paint in the Canvas, harcoded for each canvas
-        gc = canvas.getGraphicsContext2D();
-
-        // At initiate add entitys
+        // At initiate add entities
         final int initialFishes = 5;
         initialize(initialFishes);
         
-        ColliderSystem collider = new ColliderSystem (canvasWidth, canvasHeight);
+        CanvasBounceAndRotationSystem collider = new CanvasBounceAndRotationSystem (canvasWidth, canvasHeight);
         MovementSystem mov = new MovementSystem();
         RenderSystem render = new RenderSystem(canvas);
+        
         //add systems to the list
         systems.add(mov);
         systems.add(render);
@@ -158,29 +155,7 @@ public class MainScene extends Application {
         }
     }
 
-    /*to create bubbles
-    private void addBubble(double size, double speed, BoundingBox canvasBox) {
-        Position pos = getRandomPoint();
-        Direction direction = new Direction(0, -speed);
-        Animation animation = new AnimationBubbleIdle(size);
-        Movement movement = new LinearMovement(direction);
-        Movement loop = new LoopOutOfBoundsMovement(movement, canvasBox);
-        sceneObjectList.add(new Bubble(size, pos, animation, loop));
-    }
-
-    //creates normal fishes
-    public void addFish(Position position) {
-        RandomColor randomColor = new RandomColor();
-        Animation anim = new AnimationFishIdle(0.5 + random.nextDouble(1),
-                random.nextBoolean(), randomColor.getColor());
-
-        double dx = Math.random() * 80 - 40;
-        double dy = Math.random() * 80 - 40;
-
-        Direction direction = new Direction(dx, dy);
-        Movement movement = new LoopOutOfBoundsMovement(new LinearMovement(direction), canvasBox);
-        sceneObjectList.add(new Fish(position, movement, anim));
-    }*/
+    
     public void addBubbleECS(double size, double speed) {
         Position pos = getRandomPoint();
         Entity bubble = new Entity();
@@ -210,17 +185,6 @@ public class MainScene extends Application {
         entities.add(fish);
     }
 
-    /*Creates coralfish
-    public void addCoralFish(Position position) {
-        Animation anim_coral = new AnimationCoralFish(0.3 + random.nextDouble(0.5));
-
-        double dx = Math.random() * 80 - 1;
-        double dy = Math.random() * 80 - 1;
-
-        Direction direction = new Direction(dx, dy);
-        Movement movement = new MovementRebound(new LinearMovement(direction), canvasBox);
-        // sceneObjectList.add(new Fish(position, movement, anim_coral));
-    }*/
 
     //to obtain a position inside canvas
     public static Position getRandomPoint() {

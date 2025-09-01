@@ -4,14 +4,15 @@
  */
 package com.mycompany.animacionpecera.Components;
 
-
 /**
  *
  * @author carol
  */
 public class Transform extends Component {
 
-    private double x, y, rotation, scaleX, scaleY;
+    private double x, y; 
+    private double rotation;
+    private double scaleX, scaleY;
 
     public Transform(double x, double y, double rotation, double scaleX, double scaleY) {
         this.x = x;
@@ -23,23 +24,6 @@ public class Transform extends Component {
 
     public Transform(double x, double y) {
         this(x, y, 0, 1, 1);
-    }
-
-    public javafx.scene.transform.Affine getAffineTransform() {
-        javafx.scene.transform.Affine affine = new javafx.scene.transform.Affine();
-
-        //Important order: translate -> rotate -> scale
-        affine.appendTranslation(x, y);
-
-        if (rotation != 0) {
-            affine.appendRotation(Math.toDegrees(rotation));
-        }
-
-        if (scaleX != 1 || scaleY != 1) {
-            affine.appendScale(scaleX, scaleY);
-        }
-
-        return affine;
     }
 
     // Getters and Setters

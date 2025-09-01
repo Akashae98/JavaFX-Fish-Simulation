@@ -45,6 +45,60 @@ public class RenderSystem extends GameSystem {
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         // Paint SOLAR RAYS
+        paintSolarRays(deltaTime);
+
+        //paint entities
+        for (Entity entity : entities) {
+            Transform transform = entity.getComponent(Transform.class);
+            SpriteComponent sprite = entity.getComponent(SpriteComponent.class);
+            //a white circle to highlight the bubbles..?
+            if (entity.hasComponent(Bubble.class)) {
+                gc.setFill(Color.rgb(255, 255, 255, 0.3)); //white color semitransparent
+                gc.fillOval(transform.getX() - sprite.getWidth() / 2,
+                        transform.getY() - sprite.getWidth() / 2, sprite.getWidth(), sprite.getWidth());//fills with color the inside of bubble
+                gc.setStroke(Color.rgb(255, 255, 255, 0.5));//white color for the bubble edge
+                gc.strokeOval(transform.getX() - sprite.getWidth() / 2,
+                        transform.getY() - sprite.getWidth() / 2, sprite.getWidth(), sprite.getWidth());//fills with color
+            }
+            if (entity.hasComponent(Transform.class) && entity.hasComponent(SpriteComponent.class)) {
+                //save gc state
+                gc.save();
+
+                // applies translate and rotation
+                gc.setTransform(getAffineTransform(transform));
+
+                if (sprite.flip) {
+                    gc.scale(-1, 1);
+                }
+
+                gc.drawImage(sprite.image, -sprite.getWidth() / 2,
+                        -sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
+
+                gc.restore();
+
+            }
+        }
+
+    }
+
+    public javafx.scene.transform.Affine getAffineTransform(Transform transform) {
+        javafx.scene.transform.Affine affine = new javafx.scene.transform.Affine();
+
+        //Important order: translate -> rotate -> scale
+        affine.appendTranslation(transform.getX(), transform.getY());
+
+        if (transform.getRotation() != 0) {
+            affine.appendRotation(Math.toDegrees(transform.getRotation()));
+        }
+
+        if (transform.getScaleX() != 1 || transform.getScaleY() != 1) {
+            affine.appendScale(transform.getScaleX(), transform.getScaleY());
+        }
+
+        return affine;
+    }
+
+    public void paintSolarRays(double deltaTime) {
         time += deltaTime; // Increase accumulated time
         gc.save();
         gc.setGlobalAlpha(0.15); //semi-transparency
@@ -82,7 +136,7 @@ public class RenderSystem extends GameSystem {
                 rayLength, // bottom
                 rayLength // bottom
             };
-            
+
             // Vertical gradient for the ray
             LinearGradient rayGradient = new LinearGradient(
                     0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
@@ -96,39 +150,6 @@ public class RenderSystem extends GameSystem {
         }
 
         gc.restore();
-
-        //paint entities
-        for (Entity entity : entities) {
-            Transform transform = entity.getComponent(Transform.class);
-            SpriteComponent sprite = entity.getComponent(SpriteComponent.class);
-            //a white circle to highlight the bubbles..?
-            if (entity.hasComponent(Bubble.class)) {
-                gc.setFill(Color.rgb(255, 255, 255, 0.3)); //white color semitransparent
-                gc.fillOval(transform.getX() - sprite.getWidth() / 2,
-                transform.getY() - sprite.getWidth() / 2, sprite.getWidth(), sprite.getWidth());//fills with color the inside of bubble
-                gc.setStroke(Color.rgb(255, 255, 255, 0.5));//white color for the bubble edge
-                gc.strokeOval(transform.getX() - sprite.getWidth() / 2,
-                transform.getY() - sprite.getWidth() / 2, sprite.getWidth(), sprite.getWidth());//fills with color
-            }
-            if (entity.hasComponent(Transform.class) && entity.hasComponent(SpriteComponent.class)) {
-                //save gc state
-                gc.save();
-
-                // applies translate and rotation
-                gc.setTransform(transform.getAffineTransform());
-
-                if (sprite.flip) {
-                    gc.scale(-1, 1);
-                }
-
-                gc.drawImage(sprite.image, -sprite.getWidth() / 2,
-                        -sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
-
-                gc.restore();
-
-            }
-        }
-
     }
 
 }

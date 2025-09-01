@@ -66,12 +66,6 @@ public class GameLoop extends AnimationTimer {
             return;
         }
 
-        // Logic
-        //updateGameLogic(deltaTime);
-
-        // Rendering
-        //renderScene(deltaTime);
-
         // Updates fps stats
         updateFpsStats(deltaTime);
 
@@ -82,28 +76,11 @@ public class GameLoop extends AnimationTimer {
         capFrameRate(now);
         
         //ECS
-        update(deltaTime);
-    }
-
-    private void update(double deltaTime) {
         for (GameSystem system : systems) {
             system.update(entities, deltaTime);
         }
     }
 
-    /*private void renderScene(double deltaTime) {
-        // Gradient background simulates water 
-        LinearGradient background = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
-                new Stop(0, Color.rgb(127, 240, 220)),
-                new Stop(1, Color.rgb(70, 130, 180)));
-        gc.setFill(background);
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-        // Rendering
-        for (SceneObject object : sceneObjectList) {
-            object.draw(gc, showBox, deltaTime);
-        }
-    }*/
 
     private void updateFpsStats(double deltaTime) {
         elapsedTime += deltaTime;
