@@ -27,7 +27,7 @@ public class ColliderComponent extends Component {
         return height;
     }
 
-    public double getLeft(Transform transform) {
+   public double getLeft(Transform transform) {
         return transform.getX() - width / 2.0;
     }
     
@@ -42,6 +42,7 @@ public class ColliderComponent extends Component {
     public double getBottom(Transform transform) {
         return transform.getY() + height / 2.0;
     }
+
 
     //Collisions with colliders...
     public boolean intersects(ColliderComponent other, Transform thisTransform, Transform otherTransform) {

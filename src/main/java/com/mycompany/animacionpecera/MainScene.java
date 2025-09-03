@@ -11,11 +11,11 @@ import com.mycompany.animacionpecera.Components.ColliderComponent;
 import com.mycompany.animacionpecera.Components.SpriteComponent;
 import com.mycompany.animacionpecera.Components.Transform;
 import com.mycompany.animacionpecera.System.CanvasBounceAndRotationSystem;
+import com.mycompany.animacionpecera.System.DebugCollisionRender;
 import com.mycompany.animacionpecera.System.GameSystem;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -60,11 +60,13 @@ public class MainScene extends Application {
         CanvasBounceAndRotationSystem canvasSystem = new CanvasBounceAndRotationSystem(canvasWidth, canvasHeight);
         MovementSystem movement = new MovementSystem();
         RenderSystem render = new RenderSystem(canvas);
+        DebugCollisionRender debug = new DebugCollisionRender(canvas);
 
         //add systems to the list
         systems.add(movement);
         systems.add(render);
         systems.add(canvasSystem);
+        systems.add(debug);
 
         //Creates the game loop
         gameLoop = new GameLoop(canvas, entities, systems);
@@ -168,7 +170,7 @@ public class MainScene extends Application {
         double width = ImageManager.getInstance().getWidth("bubble");
         double height = ImageManager.getInstance().getHeight("bubble");
 
-        bubble.add(new ColliderComponent(width * transform.getScaleX(), height * transform.getScaleY()));
+        bubble.add(new ColliderComponent(width, height));
         bubble.add(new VelocityComponent(0, -speed));
 
         entities.add(bubble);
@@ -183,7 +185,7 @@ public class MainScene extends Application {
         fish.add(sprite);
         double width = ImageManager.getInstance().getWidth("coralfish");
         double height = ImageManager.getInstance().getHeight("coralfish");
-        fish.add(new ColliderComponent(width * transform.getScaleX(), height * transform.getScaleY()));
+        fish.add(new ColliderComponent(width, height));
         double velx = Math.random() * 80 - 40;
         double vely = Math.random() * 80 - 40;
         fish.add(new VelocityComponent(velx, vely));

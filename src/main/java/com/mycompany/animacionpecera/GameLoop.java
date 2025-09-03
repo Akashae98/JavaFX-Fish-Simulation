@@ -4,6 +4,7 @@
  */
 package com.mycompany.animacionpecera;
 
+import com.mycompany.animacionpecera.System.DebugCollisionRender;
 import com.mycompany.animacionpecera.System.GameSystem;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
@@ -36,11 +37,11 @@ public class GameLoop extends AnimationTimer {
     private double msPerFrame;
 
     //Constructor
-    public GameLoop(Canvas canvas, List<Entity> entities,List<GameSystem> systems) {
+    public GameLoop(Canvas canvas, List<Entity> entities, List<GameSystem> systems) {
         this.gc = canvas.getGraphicsContext2D();
         this.canvas = canvas;
         this.entities = entities;
-        this.systems= systems;
+        this.systems = systems;
     }
 
     @Override
@@ -74,13 +75,12 @@ public class GameLoop extends AnimationTimer {
 
         // Cap FPS to 60 (max 16.67 ms/frame)
         capFrameRate(now);
-        
+
         //ECS
         for (GameSystem system : systems) {
             system.update(entities, deltaTime);
         }
     }
-
 
     private void updateFpsStats(double deltaTime) {
         elapsedTime += deltaTime;
@@ -112,8 +112,17 @@ public class GameLoop extends AnimationTimer {
     }
 
     // Public methods to control animation states
-    public void setShowBox(boolean showBox) {
-        this.showBox = showBox;
+    public void setShowBox(boolean show) {
+        this.showBox = show;
+        for (GameSystem system : systems) {
+            if (system instanceof DebugCollisionRender debugRender) {
+                debugRender.setShowBox(show);
+            }
+        }
+    }
+
+    public boolean isShowBox() {
+        return showBox;
     }
 
     public void setRunning(boolean running) {
@@ -122,10 +131,6 @@ public class GameLoop extends AnimationTimer {
 
     public boolean isRunning() {
         return running;
-    }
-
-    public boolean isShowBox() {
-        return showBox;
     }
 
 }
