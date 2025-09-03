@@ -4,8 +4,6 @@
  */
 package com.mycompany.animacionpecera.Components;
 
-import com.mycompany.animacionpecera.ImageManager;
-import javafx.scene.image.Image;
 
 /**
  *
@@ -13,20 +11,18 @@ import javafx.scene.image.Image;
  */
 public class SpriteComponent extends Component {
 
-    public Image image;
+    public String imageKey;
     public double size;
     public boolean flip = false;
 
-    public SpriteComponent(String imagePath, double size) {
-        this.image = ImageManager.getInstance().getImage(imagePath);
+    public SpriteComponent(String imageKey, double size) {
+        this.imageKey = imageKey;
         this.size = size;
     }
 
-    public double getWidth() {
-        return image.getWidth() * size;
+    public String getImageKey() {
+        return imageKey;
     }
 
-    public double getHeight() {
-        return image.getHeight() * size;
-    }
+   
 }

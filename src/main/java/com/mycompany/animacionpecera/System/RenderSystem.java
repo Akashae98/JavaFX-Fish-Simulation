@@ -8,9 +8,11 @@ import com.mycompany.animacionpecera.Components.Bubble;
 import com.mycompany.animacionpecera.Components.SpriteComponent;
 import com.mycompany.animacionpecera.Entity;
 import com.mycompany.animacionpecera.Components.Transform;
+import com.mycompany.animacionpecera.ImageManager;
 import java.util.List;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -51,14 +53,19 @@ public class RenderSystem extends GameSystem {
         for (Entity entity : entities) {
             Transform transform = entity.getComponent(Transform.class);
             SpriteComponent sprite = entity.getComponent(SpriteComponent.class);
+
+            Image image = ImageManager.getInstance().getImage(sprite.imageKey);
+            double width = image.getWidth() * transform.getSize();
+            double height = image.getHeight() * transform.getSize();
+
             //a white circle to highlight the bubbles..?
             if (entity.hasComponent(Bubble.class)) {
-                gc.setFill(Color.rgb(255, 255, 255, 0.3)); //white color semitransparent
-                gc.fillOval(transform.getX() - sprite.getWidth() / 2,
-                        transform.getY() - sprite.getWidth() / 2, sprite.getWidth(), sprite.getWidth());//fills with color the inside of bubble
-                gc.setStroke(Color.rgb(255, 255, 255, 0.5));//white color for the bubble edge
-                gc.strokeOval(transform.getX() - sprite.getWidth() / 2,
-                        transform.getY() - sprite.getWidth() / 2, sprite.getWidth(), sprite.getWidth());//fills with color
+                gc.setFill(Color.rgb(255, 255, 255, 0.3));
+                gc.fillOval(transform.getX() - width / 2,
+                        transform.getY() - width / 2, width, width);
+                gc.setStroke(Color.rgb(255, 255, 255, 0.5));
+                gc.strokeOval(transform.getX() - width / 2,
+                        transform.getY() - width / 2, width, width);
             }
             if (entity.hasComponent(Transform.class) && entity.hasComponent(SpriteComponent.class)) {
                 //save gc state
@@ -71,14 +78,17 @@ public class RenderSystem extends GameSystem {
                     gc.scale(-1, 1);
                 }
 
-                gc.drawImage(sprite.image, -sprite.getWidth() / 2,
-                        -sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
+                gc.drawImage(image, -width / 2, -height / 2, width, height);
 
                 gc.restore();
-
             }
         }
 
+    }
+
+    public void cleanCanvas() {
+        //clearRect cleans the canvas using transparency and let us draw again
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
     public javafx.scene.transform.Affine getAffineTransform(Transform transform) {

@@ -56,15 +56,15 @@ public class MainScene extends Application {
         // At initiate add entities
         final int initialFishes = 5;
         initialize(initialFishes);
-        
-        CanvasBounceAndRotationSystem collider = new CanvasBounceAndRotationSystem (canvasWidth, canvasHeight);
-        MovementSystem mov = new MovementSystem();
+
+        CanvasBounceAndRotationSystem canvasSystem = new CanvasBounceAndRotationSystem(canvasWidth, canvasHeight);
+        MovementSystem movement = new MovementSystem();
         RenderSystem render = new RenderSystem(canvas);
-        
+
         //add systems to the list
-        systems.add(mov);
+        systems.add(movement);
         systems.add(render);
-        systems.add(collider);
+        systems.add(canvasSystem);
 
         //Creates the game loop
         gameLoop = new GameLoop(canvas, entities, systems);
@@ -155,18 +155,20 @@ public class MainScene extends Application {
         }
     }
 
-    
     public void addBubbleECS(double size, double speed) {
         Position pos = getRandomPoint();
         Entity bubble = new Entity();
-        
         bubble.add(new Bubble());
-        bubble.add(new Transform(pos.x(),pos.y()));
-        
-        SpriteComponent sprite = new SpriteComponent("bubble", size);
+        Transform transform = new Transform(pos.x(), pos.y(), size);
+        bubble.add(transform);
+
+        SpriteComponent sprite = new SpriteComponent("bubble", transform.getSize());
         bubble.add(sprite);
-  
-        bubble.add(new ColliderComponent(sprite.getWidth(), sprite.getHeight()));
+
+        double width = ImageManager.getInstance().getWidth("bubble");
+        double height = ImageManager.getInstance().getHeight("bubble");
+
+        bubble.add(new ColliderComponent(width * transform.getSize(), height * transform.getSize()));
         bubble.add(new VelocityComponent(0, -speed));
 
         entities.add(bubble);
@@ -174,17 +176,19 @@ public class MainScene extends Application {
 
     public void addCoralECS(Position pos) {
         Entity fish = new Entity();
-        fish.add(new Transform(pos.x(),pos.y()));
-        SpriteComponent sprite = new SpriteComponent("coralfish", 0.3 + random.nextDouble(0.5));
+        Transform transform = new Transform(pos.x(), pos.y(), 0.3 + random.nextDouble(0.5));
+        fish.add(transform);
+        SpriteComponent sprite = new SpriteComponent("coralfish", transform.getSize());
         fish.add(sprite);
-        fish.add(new ColliderComponent(sprite.getWidth(), sprite.getHeight()));
+        double width = ImageManager.getInstance().getWidth("coralfish");
+        double height = ImageManager.getInstance().getHeight("coralfish");
+        fish.add(new ColliderComponent(width * transform.getSize(), height * transform.getSize()));
         double velx = Math.random() * 80 - 40;
         double vely = Math.random() * 80 - 40;
         fish.add(new VelocityComponent(velx, vely));
 
         entities.add(fish);
     }
-
 
     //to obtain a position inside canvas
     public static Position getRandomPoint() {

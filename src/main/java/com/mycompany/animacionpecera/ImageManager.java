@@ -42,4 +42,12 @@ public class ImageManager {
     public boolean hasImage(String key) {
         return images.containsKey(key);
     }
+    
+    public double getWidth (String key){
+       return getImage(key).getWidth(); 
+    }
+    
+    public double getHeight (String key){
+       return getImage(key).getHeight();
+    }
 }
