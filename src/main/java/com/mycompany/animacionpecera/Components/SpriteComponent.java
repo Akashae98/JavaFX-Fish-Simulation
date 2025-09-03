@@ -12,12 +12,12 @@ package com.mycompany.animacionpecera.Components;
 public class SpriteComponent extends Component {
 
     public String imageKey;
-    public double size;
+    public double scale;
     public boolean flip = false;
 
-    public SpriteComponent(String imageKey, double size) {
+    public SpriteComponent(String imageKey, double scale) {
         this.imageKey = imageKey;
-        this.size = size;
+        this.scale = scale;
     }
 
     public String getImageKey() {

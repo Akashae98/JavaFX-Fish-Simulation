@@ -55,17 +55,18 @@ public class RenderSystem extends GameSystem {
             SpriteComponent sprite = entity.getComponent(SpriteComponent.class);
 
             Image image = ImageManager.getInstance().getImage(sprite.imageKey);
-            double width = image.getWidth() * transform.getSize();
-            double height = image.getHeight() * transform.getSize();
+            double widthDraw = image.getWidth() * transform.getScaleX();
+            double height = image.getHeight();
+            double width = image.getWidth();
 
             //a white circle to highlight the bubbles..?
             if (entity.hasComponent(Bubble.class)) {
                 gc.setFill(Color.rgb(255, 255, 255, 0.3));
-                gc.fillOval(transform.getX() - width / 2,
-                        transform.getY() - width / 2, width, width);
+                gc.fillOval(transform.getX() - widthDraw / 2,
+                        transform.getY() - widthDraw / 2, widthDraw, widthDraw);
                 gc.setStroke(Color.rgb(255, 255, 255, 0.5));
-                gc.strokeOval(transform.getX() - width / 2,
-                        transform.getY() - width / 2, width, width);
+                gc.strokeOval(transform.getX() - widthDraw / 2,
+                        transform.getY() - widthDraw / 2, widthDraw, widthDraw);
             }
             if (entity.hasComponent(Transform.class) && entity.hasComponent(SpriteComponent.class)) {
                 //save gc state

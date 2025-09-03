@@ -13,19 +13,18 @@ public class Transform extends Component {
     private double x, y; 
     private double rotation;
     private double scaleX, scaleY;
-    private double size;
+  
 
-    public Transform(double x, double y, double rotation, double scaleX, double scaleY, double size) {
+    public Transform(double x, double y, double rotation, double scaleX, double scaleY) {
         this.x = x;
         this.y = y;
         this.rotation = rotation;
         this.scaleX = scaleX;
         this.scaleY = scaleY;
-        this.size = size;
     }
 
-    public Transform(double x, double y, double size) {
-        this(x, y, 0, 1, 1, size);
+    public Transform(double x, double y, double scaleX, double scaleY) {
+        this(x, y, 0, scaleX, scaleY);
     }
 
     // Getters and Setters
@@ -69,11 +68,6 @@ public class Transform extends Component {
         this.scaleY = scaleY;
     }
 
-    public double getSize() {
-        return size;
-    }
- 
-    
-    
+   
 
 }

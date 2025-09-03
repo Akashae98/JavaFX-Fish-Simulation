@@ -159,16 +159,16 @@ public class MainScene extends Application {
         Position pos = getRandomPoint();
         Entity bubble = new Entity();
         bubble.add(new Bubble());
-        Transform transform = new Transform(pos.x(), pos.y(), size);
+        Transform transform = new Transform(pos.x(), pos.y(), size, size);
         bubble.add(transform);
 
-        SpriteComponent sprite = new SpriteComponent("bubble", transform.getSize());
+        SpriteComponent sprite = new SpriteComponent("bubble", transform.getScaleX());
         bubble.add(sprite);
 
         double width = ImageManager.getInstance().getWidth("bubble");
         double height = ImageManager.getInstance().getHeight("bubble");
 
-        bubble.add(new ColliderComponent(width * transform.getSize(), height * transform.getSize()));
+        bubble.add(new ColliderComponent(width * transform.getScaleX(), height * transform.getScaleY()));
         bubble.add(new VelocityComponent(0, -speed));
 
         entities.add(bubble);
@@ -176,13 +176,14 @@ public class MainScene extends Application {
 
     public void addCoralECS(Position pos) {
         Entity fish = new Entity();
-        Transform transform = new Transform(pos.x(), pos.y(), 0.3 + random.nextDouble(0.5));
+        double scale = 0.3 + random.nextDouble(0.5);
+        Transform transform = new Transform(pos.x(), pos.y(), scale, scale);
         fish.add(transform);
-        SpriteComponent sprite = new SpriteComponent("coralfish", transform.getSize());
+        SpriteComponent sprite = new SpriteComponent("coralfish", transform.getScaleX());
         fish.add(sprite);
         double width = ImageManager.getInstance().getWidth("coralfish");
         double height = ImageManager.getInstance().getHeight("coralfish");
-        fish.add(new ColliderComponent(width * transform.getSize(), height * transform.getSize()));
+        fish.add(new ColliderComponent(width * transform.getScaleX(), height * transform.getScaleY()));
         double velx = Math.random() * 80 - 40;
         double vely = Math.random() * 80 - 40;
         fish.add(new VelocityComponent(velx, vely));
