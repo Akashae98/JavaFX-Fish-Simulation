@@ -35,7 +35,7 @@ public class CanvasBounceAndRotationSystem extends GameSystem {
 
                 // Bubbles reappear at the bottom of the canvas
                 if (entity.hasComponent(Bubble.class)) {
-                    double halfHeight = collider.getHeight() / 2;
+                    double halfHeight = collider.getHeight(transform) / 2;
                     if (transform.getY() + halfHeight < 0) {
                         transform.setY(canvasHeight + halfHeight);
                         transform.setX(Math.random() * canvasWidth);

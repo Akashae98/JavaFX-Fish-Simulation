@@ -19,28 +19,28 @@ public class ColliderComponent extends Component {
         this.height = height;
     }
 
-    public double getWidth() {
-        return width;
+    public double getWidth(Transform transform) {
+        return width * transform.getScaleX();
     }
 
-    public double getHeight() {
-        return height;
+    public double getHeight(Transform transform) {
+        return height * transform.getScaleY();
     }
 
    public double getLeft(Transform transform) {
-        return transform.getX() - width / 2.0;
+        return transform.getX() - getWidth(transform) / 2.0;
     }
     
     public double getRight(Transform transform) {
-        return transform.getX() + width / 2.0;
+        return transform.getX() + getWidth(transform) / 2.0;
     }
     
     public double getTop(Transform transform) {
-        return transform.getY() - height / 2.0;
+        return transform.getY() - getHeight(transform) / 2.0;
     }
     
     public double getBottom(Transform transform) {
-        return transform.getY() + height / 2.0;
+        return transform.getY() + getHeight(transform) / 2.0;
     }
 
 

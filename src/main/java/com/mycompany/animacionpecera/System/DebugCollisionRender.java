@@ -44,14 +44,14 @@ public class DebugCollisionRender extends GameSystem {
                 
                 gc.save();
                           
-                double halfWidth = collider.getWidth() / 2.0;
-                double halfHeight = collider.getHeight() / 2.0;
+                double halfWidth = collider.getWidth(transform) / 2.0;
+                double halfHeight = collider.getHeight(transform) / 2.0;
                 
                 gc.setTransform(getAffineTransform(transform));
                 
                 gc.setStroke(Color.MAGENTA);
                 gc.setLineWidth(1.0);
-                gc.strokeRect(-halfWidth, -halfHeight, collider.getWidth(), collider.getHeight());
+                gc.strokeRect(-halfWidth, -halfHeight, collider.getWidth(transform), collider.getHeight(transform));
                 
                 gc.strokeText(".", 0, 0);
                 
@@ -68,10 +68,6 @@ public class DebugCollisionRender extends GameSystem {
 
         if (transform.getRotation() != 0) {
             affine.appendRotation(Math.toDegrees(transform.getRotation()));
-        }
-
-        if (transform.getScaleX() != 1 || transform.getScaleY() != 1) {
-            affine.appendScale(transform.getScaleX(), transform.getScaleY());
         }
 
         return affine;
