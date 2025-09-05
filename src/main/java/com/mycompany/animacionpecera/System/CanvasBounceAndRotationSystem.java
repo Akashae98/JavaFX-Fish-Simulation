@@ -4,10 +4,12 @@
  */
 package com.mycompany.animacionpecera.System;
 
+import com.mycompany.animacionpecera.Components.BoxCollider;
 import com.mycompany.animacionpecera.Components.VelocityComponent;
 import com.mycompany.animacionpecera.Components.ColliderComponent;
 import com.mycompany.animacionpecera.Components.SpriteComponent;
 import com.mycompany.animacionpecera.Components.Bubble;
+import com.mycompany.animacionpecera.Components.CircleCollider;
 import com.mycompany.animacionpecera.Entity;
 import com.mycompany.animacionpecera.Components.Transform;
 import java.util.List;
@@ -28,22 +30,23 @@ public class CanvasBounceAndRotationSystem extends GameSystem {
     @Override
     public void update(List<Entity> entities, double deltaTime) {
         for (Entity entity : entities) {
-            if (entity.hasComponent(ColliderComponent.class)) {
+            if (entity.hasComponent(BoxCollider.class) || entity.hasComponent(CircleCollider.class)) {
                 Transform transform = entity.getComponent(Transform.class);
-                ColliderComponent collider = entity.getComponent(ColliderComponent.class);
                 VelocityComponent velocity = entity.getComponent(VelocityComponent.class);
+                BoxCollider boxCollider = entity.getComponent(BoxCollider.class);
+                CircleCollider circleCollider = entity.getComponent(CircleCollider.class);
 
                 // Bubbles reappear at the bottom of the canvas
                 if (entity.hasComponent(Bubble.class)) {
-                    double halfHeight = collider.getHeight(transform) / 2;
-                    if (transform.getY() + halfHeight < 0) {
-                        transform.setY(canvasHeight + halfHeight);
+                    double radius = circleCollider.getRadius(transform);
+                    if (transform.getY() - radius < 0) {
+                        transform.setY(canvasHeight + radius);
                         transform.setX(Math.random() * canvasWidth);
                     }
-                    
-                } else if (entity.hasComponent(SpriteComponent.class)) {  
+
+                } else if (entity.hasComponent(SpriteComponent.class)) {
                     SpriteComponent sprite = entity.getComponent(SpriteComponent.class);
-                    boolean bounced = handleBounce(transform, velocity, collider);
+                    boolean bounced = handleBounce(transform, velocity, boxCollider);
 
                     if (bounced || velocity.velX != 0) {
                         // horizontal flip
@@ -86,4 +89,5 @@ public class CanvasBounceAndRotationSystem extends GameSystem {
         }
         return bounced;
     }
+
 }

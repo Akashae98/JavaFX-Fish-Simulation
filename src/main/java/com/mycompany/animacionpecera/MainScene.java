@@ -3,7 +3,9 @@
  */
 package com.mycompany.animacionpecera;
 
+import com.mycompany.animacionpecera.Components.BoxCollider;
 import com.mycompany.animacionpecera.Components.Bubble;
+import com.mycompany.animacionpecera.Components.CircleCollider;
 import com.mycompany.animacionpecera.System.RenderSystem;
 import com.mycompany.animacionpecera.System.MovementSystem;
 import com.mycompany.animacionpecera.Components.VelocityComponent;
@@ -171,7 +173,7 @@ public class MainScene extends Application {
         double width = ImageManager.getInstance().getWidth("bubble");
         double height = ImageManager.getInstance().getHeight("bubble");
 
-        bubble.add(new ColliderComponent(width, height));
+        bubble.add(new CircleCollider(width, height));
         bubble.add(new VelocityComponent(0, -speed));
 
         entities.add(bubble);
@@ -193,7 +195,7 @@ public class MainScene extends Application {
         fish.add(sprite);
         double width = ImageManager.getInstance().getWidth("coralfish");
         double height = ImageManager.getInstance().getHeight("coralfish");
-        fish.add(new ColliderComponent(width, height));
+        fish.add(new BoxCollider(width, height));
         double velx = Math.random() * 80 - 40;
         double vely = Math.random() * 80 - 40;
         fish.add(new VelocityComponent(velx, vely));

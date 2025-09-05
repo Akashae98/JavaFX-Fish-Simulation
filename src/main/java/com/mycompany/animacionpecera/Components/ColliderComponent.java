@@ -4,12 +4,11 @@
  */
 package com.mycompany.animacionpecera.Components;
 
-
 /**
  *
  * @author carol
  */
-public class ColliderComponent extends Component {
+public abstract class ColliderComponent extends Component {
 
     public double width;
     public double height;
@@ -27,22 +26,13 @@ public class ColliderComponent extends Component {
         return height * transform.getScaleY();
     }
 
-   public double getLeft(Transform transform) {
-        return transform.getX() - getWidth(transform) / 2.0;
-    }
-    
-    public double getRight(Transform transform) {
-        return transform.getX() + getWidth(transform) / 2.0;
-    }
-    
-    public double getTop(Transform transform) {
-        return transform.getY() - getHeight(transform) / 2.0;
-    }
-    
-    public double getBottom(Transform transform) {
-        return transform.getY() + getHeight(transform) / 2.0;
-    }
+    public abstract double getLeft(Transform transform);
 
+    public abstract double getRight(Transform transform);
+
+    public abstract double getTop(Transform transform);
+
+    public abstract double getBottom(Transform transform);
 
     //Collisions with colliders...
     public boolean intersects(ColliderComponent other, Transform thisTransform, Transform otherTransform) {

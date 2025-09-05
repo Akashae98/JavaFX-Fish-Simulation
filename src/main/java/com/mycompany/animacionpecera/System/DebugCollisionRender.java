@@ -4,6 +4,8 @@
  */
 package com.mycompany.animacionpecera.System;
 
+import com.mycompany.animacionpecera.Components.BoxCollider;
+import com.mycompany.animacionpecera.Components.CircleCollider;
 import com.mycompany.animacionpecera.Components.ColliderComponent;
 import com.mycompany.animacionpecera.Components.Transform;
 import com.mycompany.animacionpecera.Entity;
@@ -31,36 +33,43 @@ public class DebugCollisionRender extends GameSystem {
         this.showBox = show;
     }
 
-
     @Override
     public void update(List<Entity> entities, double deltaTime) {
         if (!showBox) {
             return;
-        }  
+        }
         for (Entity entity : entities) {
-            if (entity.hasComponent(ColliderComponent.class) && entity.hasComponent(Transform.class)) {
-                ColliderComponent collider = entity.getComponent(ColliderComponent.class);
+            if ((entity.hasComponent(BoxCollider.class) || entity.hasComponent(CircleCollider.class))
+                    && entity.hasComponent(Transform.class)) {
+                BoxCollider boxCollider = entity.getComponent(BoxCollider.class);
+                CircleCollider circleCollider = entity.getComponent(CircleCollider.class);
                 Transform transform = entity.getComponent(Transform.class);
-                
+
                 gc.save();
-                          
-                double halfWidth = collider.getWidth(transform) / 2.0;
-                double halfHeight = collider.getHeight(transform) / 2.0;
-                
                 gc.setTransform(getAffineTransform(transform));
-                
                 gc.setStroke(Color.MAGENTA);
-                gc.setLineWidth(1.0);
-                gc.strokeRect(-halfWidth, -halfHeight, collider.getWidth(transform), collider.getHeight(transform));
+
+                if (boxCollider != null) {
+                    double halfWidth = boxCollider.getWidth(transform) / 2.0;
+                    double halfHeight = boxCollider.getHeight(transform) / 2.0;
+  
+                    gc.setLineWidth(1.0);
+                    gc.strokeRect(-halfWidth, -halfHeight, boxCollider.getWidth(transform),
+                    boxCollider.getHeight(transform));
+
+                } else if (circleCollider != null) {
+                    double radius = circleCollider.getRadius(transform);
+                    gc.setLineWidth(1.0);
+                    gc.strokeOval(-radius, -radius, radius * 2, radius * 2);
+                }
                 
                 gc.strokeText(".", 0, 0);
-                
                 gc.restore();
             }
         }
     }
 
-     public javafx.scene.transform.Affine getAffineTransform(Transform transform) {
+    public javafx.scene.transform.Affine getAffineTransform(Transform transform) {
         javafx.scene.transform.Affine affine = new javafx.scene.transform.Affine();
 
         //Important order: translate -> rotate -> scale
