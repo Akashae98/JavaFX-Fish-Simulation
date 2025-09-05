@@ -55,9 +55,10 @@ public class RenderSystem extends GameSystem {
             SpriteComponent sprite = entity.getComponent(SpriteComponent.class);
 
             Image image = ImageManager.getInstance().getImage(sprite.imageKey);
-            double widthDraw = image.getWidth() * transform.getScaleX();
             double height = image.getHeight();
             double width = image.getWidth();
+            //to manually draw the oval, we need to apply the scale without affine
+            double widthDraw = image.getWidth() * transform.getScaleX();
 
             //a white circle to highlight the bubbles..?
             if (entity.hasComponent(Bubble.class)) {

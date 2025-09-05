@@ -24,7 +24,7 @@ public class Transform extends Component {
     }
 
     public Transform(double x, double y, double scaleX, double scaleY) {
-        this(x, y, 0, scaleX, scaleY);
+        this(x, y, 0, 1, 1);
     }
 
     // Getters and Setters

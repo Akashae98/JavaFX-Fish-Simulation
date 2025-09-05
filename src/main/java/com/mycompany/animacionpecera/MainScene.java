@@ -132,9 +132,6 @@ public class MainScene extends Application {
     }
 
     private void initialize(int fishes) {
-        ImageManager.getInstance().loadImage("bubble", "/Images/bubblecolor.png");
-        ImageManager.getInstance().loadImage("coralfish", "/Images/sketchPezCoral.png");
-
         // At initiate adds x fishes in random places
         for (int i = 0; i < fishes; i++) {
             Position position = getRandomPoint();
@@ -161,10 +158,14 @@ public class MainScene extends Application {
         Position pos = getRandomPoint();
         Entity bubble = new Entity();
         bubble.add(new Bubble());
-        Transform transform = new Transform(pos.x(), pos.y(), size, size);
+        Transform transform = new Transform(pos.x(), pos.y(),0, size, size);
         bubble.add(transform);
+        String imageKey = "bubble";
+        if (!ImageManager.getInstance().hasImage(imageKey)) {
+            ImageManager.getInstance().loadImage(imageKey, "/Images/bubbleColor.png");
+        }
 
-        SpriteComponent sprite = new SpriteComponent("bubble", transform.getScaleX());
+        SpriteComponent sprite = new SpriteComponent("bubble");
         bubble.add(sprite);
 
         double width = ImageManager.getInstance().getWidth("bubble");
@@ -179,9 +180,16 @@ public class MainScene extends Application {
     public void addCoralECS(Position pos) {
         Entity fish = new Entity();
         double scale = 0.3 + random.nextDouble(0.5);
-        Transform transform = new Transform(pos.x(), pos.y(), scale, scale);
+        double scale2 = 0.3 + random.nextDouble(0.5);
+        Transform transform = new Transform(pos.x(), pos.y(),0, scale, scale2);
         fish.add(transform);
-        SpriteComponent sprite = new SpriteComponent("coralfish", transform.getScaleX());
+
+        String imageKey = "coralfish";
+        if (!ImageManager.getInstance().hasImage(imageKey)) {
+            ImageManager.getInstance().loadImage(imageKey, "/Images/sketchPezCoral.png");
+        }
+
+        SpriteComponent sprite = new SpriteComponent("coralfish");
         fish.add(sprite);
         double width = ImageManager.getInstance().getWidth("coralfish");
         double height = ImageManager.getInstance().getHeight("coralfish");
