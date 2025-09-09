@@ -20,7 +20,8 @@ import java.util.List;
  */
 public class CanvasBounceAndRotationSystem extends GameSystem {
 
-    private double canvasWidth, canvasHeight;
+    private final double canvasWidth;
+    private final double canvasHeight;
 
     public CanvasBounceAndRotationSystem(double canvasWidth, double canvasHeight) {
         this.canvasWidth = canvasWidth;
@@ -46,9 +47,8 @@ public class CanvasBounceAndRotationSystem extends GameSystem {
 
                 } else if (entity.hasComponent(SpriteComponent.class)) {
                     SpriteComponent sprite = entity.getComponent(SpriteComponent.class);
-                    boolean bounced = handleBounce(transform, velocity, boxCollider);
+                    handleBounce(transform, velocity, boxCollider);
 
-                    if (bounced || velocity.velX != 0) {
                         // horizontal flip
                         sprite.flip = velocity.velX > 0;
 
@@ -61,15 +61,12 @@ public class CanvasBounceAndRotationSystem extends GameSystem {
                             transform.setRotation(0);
                         }
 
-                    }
-
                 }
             }
         }
     }
 
-    private boolean handleBounce(Transform transform, VelocityComponent velocity, ColliderComponent collider) {
-        boolean bounced = false;
+    private void handleBounce(Transform transform, VelocityComponent velocity, ColliderComponent collider) {
 
         double leftEdge = collider.getLeft(transform);
         double rightEdge = collider.getRight(transform);
@@ -79,15 +76,13 @@ public class CanvasBounceAndRotationSystem extends GameSystem {
         // Verify collisions on left and right
         if ((leftEdge <= 0 && velocity.velX < 0) || (rightEdge >= canvasWidth && velocity.velX > 0)) {
             velocity.velX = -velocity.velX; // Invert velocity in x
-            bounced = true;
         }
 
         // Verify collision on top and bottom
         if ((topEdge <= 0 && velocity.velY < 0) || (bottomEdge >= canvasHeight && velocity.velY > 0)) {
             velocity.velY = -velocity.velY; // Invert velocity in y
-            bounced = true;
         }
-        return bounced;
+
     }
 
 }

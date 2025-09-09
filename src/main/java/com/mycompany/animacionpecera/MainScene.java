@@ -33,8 +33,8 @@ import java.util.Random;
  */
 public class MainScene extends Application {
 
-    public static final int canvasWidth = 1520;
-    public static final int canvasHeight = 780;
+    public static final int canvasWidth = 2200;
+    public static final int canvasHeight = 1200;
     public static final Random random = new Random();
 
     BoundingBox canvasBox = new BoundingBox(new Position(0, 0), new Position(canvasWidth, 0),
@@ -56,7 +56,7 @@ public class MainScene extends Application {
         Canvas canvas = new Canvas(canvasWidth, canvasHeight);
 
         // At initiate add entities
-        final int initialFishes = 5;
+        final int initialFishes = 22;
         initialize(initialFishes);
 
         CanvasBounceAndRotationSystem canvasSystem = new CanvasBounceAndRotationSystem(canvasWidth, canvasHeight);
@@ -141,18 +141,18 @@ public class MainScene extends Application {
         }
 
         // little bubbles
-        for (int i = 0; i < 40; i++) {
-            addBubbleECS(0.1 + Math.random() * 0.1, 140 + Math.random());
+        for (int i = 0; i < 50; i++) {
+            addBubbleECS(0.15 + Math.random() * 0.1, 140 + Math.random());
         }
 
         // medium bubbles
-        for (int i = 0; i < 35; i++) {
-            addBubbleECS(0.2 + Math.random() * 0.2, 100 + Math.random());
+        for (int i = 0; i < 45; i++) {
+            addBubbleECS(0.25 + Math.random() * 0.2, 100 + Math.random());
         }
 
         //big
         for (int i = 0; i < 20; i++) {
-            addBubbleECS(0.3 + Math.random() * 0.3, 80 + Math.random());
+            addBubbleECS(0.4 + Math.random() * 0.3, 80 + Math.random());
         }
     }
 
@@ -171,9 +171,7 @@ public class MainScene extends Application {
         bubble.add(sprite);
 
         double width = ImageManager.getInstance().getWidth("bubble");
-        double height = ImageManager.getInstance().getHeight("bubble");
-
-        bubble.add(new CircleCollider(width, height));
+        bubble.add(new CircleCollider(width));
         bubble.add(new VelocityComponent(0, -speed));
 
         entities.add(bubble);
@@ -182,8 +180,7 @@ public class MainScene extends Application {
     public void addCoralECS(Position pos) {
         Entity fish = new Entity();
         double scale = 0.3 + random.nextDouble(0.5);
-        double scale2 = 0.3 + random.nextDouble(0.5);
-        Transform transform = new Transform(pos.x(), pos.y(),0, scale, scale2);
+        Transform transform = new Transform(pos.x(), pos.y(),0, scale, scale);
         fish.add(transform);
 
         String imageKey = "coralfish";
