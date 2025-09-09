@@ -10,12 +10,14 @@ package com.mycompany.animacionpecera.Components;
  */
 public class CircleCollider extends ColliderComponent {
 
-    public CircleCollider(double width, double height) {
-        super(width, height);
+    private double diameter;
+
+    public CircleCollider(double diameter) {
+        this.diameter = diameter;
     }
 
     public double getRadius(Transform transform) {
-        return (width * transform.getScaleX()) / 2; // Scaled radius
+        return (diameter * transform.getScaleX()) / 2; // Scaled radius
     }
 
     @Override

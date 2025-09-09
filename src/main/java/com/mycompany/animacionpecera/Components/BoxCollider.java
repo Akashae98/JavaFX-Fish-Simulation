@@ -9,22 +9,24 @@ package com.mycompany.animacionpecera.Components;
  * @author User
  */
 public class BoxCollider extends ColliderComponent {
-    
+
+    private double width;
+    private double height;
+
     public BoxCollider(double width, double height) {
-        super(width, height);
+        this.width = width;
+        this.height = height;
     }
-    
-    @Override
-     public double getWidth(Transform transform) {
+
+    public double getWidth(Transform transform) {
         return width * transform.getScaleX();
     }
 
-    @Override
     public double getHeight(Transform transform) {
         return height * transform.getScaleY();
     }
     
-     @Override
+    @Override
     public double getLeft(Transform transform) {
         return transform.getX() - getWidth(transform) / 2.0;
     }

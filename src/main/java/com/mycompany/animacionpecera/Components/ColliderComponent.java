@@ -10,22 +10,6 @@ package com.mycompany.animacionpecera.Components;
  */
 public abstract class ColliderComponent extends Component {
 
-    public double width;
-    public double height;
-
-    public ColliderComponent(double width, double height) {
-        this.width = width;
-        this.height = height;
-    }
-
-    public double getWidth(Transform transform) {
-        return width * transform.getScaleX();
-    }
-
-    public double getHeight(Transform transform) {
-        return height * transform.getScaleY();
-    }
-
     public abstract double getLeft(Transform transform);
 
     public abstract double getRight(Transform transform);
@@ -41,4 +25,6 @@ public abstract class ColliderComponent extends Component {
                 && this.getBottom(thisTransform) > other.getTop(otherTransform)
                 && this.getTop(thisTransform) < other.getBottom(otherTransform);
     }
+
+
 }
