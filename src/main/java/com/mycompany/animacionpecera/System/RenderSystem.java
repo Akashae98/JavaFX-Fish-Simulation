@@ -13,7 +13,6 @@ import com.mycompany.animacionpecera.ImageManager;
 import java.util.List;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -71,12 +70,13 @@ public class RenderSystem extends GameSystem {
                 gc.strokeOval(transform.getX() - widthDraw / 2,
                         transform.getY() - widthDraw / 2, widthDraw, widthDraw);
             }
-            if(entity.hasComponent(SpriteComponent.class) && entity.hasComponent(MulticolorFish.class)) {
+            if (entity.hasComponent(SpriteComponent.class) && entity.hasComponent(MulticolorFish.class)) {
                 gc.save();
                 MulticolorFish multicolorFish = entity.getComponent(MulticolorFish.class);
-                setEffectHue(multicolorFish);
+                gc.setEffect(null);
+                gc.setEffect(multicolorFish.getColorEffect());
 
-                // applies translate and rotation
+                // applies to translate and rotation
                 gc.setTransform(getAffineTransform(transform));
 
                 if (sprite.flip) {
@@ -87,13 +87,11 @@ public class RenderSystem extends GameSystem {
 
                 gc.restore();
 
-
-            }
-            else if (entity.hasComponent(Transform.class) && entity.hasComponent(SpriteComponent.class)) {
+            } else if (entity.hasComponent(Transform.class) && entity.hasComponent(SpriteComponent.class)) {
                 //save gc state
                 gc.save();
 
-                // applies translate and rotation
+                // applies to translate and rotation
                 gc.setTransform(getAffineTransform(transform));
 
                 if (sprite.flip) {
@@ -107,39 +105,6 @@ public class RenderSystem extends GameSystem {
 
         }
 
-    }
-    public void setEffectHue(MulticolorFish multicolorfish) {
-        gc.setEffect(null);
-        double hue = multicolorfish.getHue();
-        double normalizedHue = (hue - 180) / 180.0; // 0–360 → -1 a 1
-
-        ColorAdjust colorAdjust = new ColorAdjust();
-
-        if (multicolorfish.isTurquoiseHue(hue)) {
-            // turns the pink image to blue colors
-            colorAdjust.setHue(normalizedHue);
-            colorAdjust.setSaturation(0.45);
-            colorAdjust.setBrightness(0.2);
-
-        } else if (multicolorfish.isPinkHue(hue)) {
-            colorAdjust.setHue(0 + (multicolorfish.getRandomHue()) * 0.3 - 0.1);//ajusted pink
-            colorAdjust.setSaturation(0.45);
-            colorAdjust.setBrightness(0.35);
-
-        } else if (multicolorfish.isPurpleHue(hue)) {
-            colorAdjust.setHue(0 - (multicolorfish.getRandomHue() * 0.5));//ajusted purples anb blues
-            colorAdjust.setSaturation(0.40);
-            colorAdjust.setBrightness(0.30);
-
-        } else {
-            // Coral to golden colors
-            colorAdjust.setHue(multicolorfish.getRandomHue()* 0.12);
-            colorAdjust.setSaturation(0.60);
-            colorAdjust.setBrightness(0.25);
-
-        }
-
-        gc.setEffect(colorAdjust);
     }
 
     public void cleanCanvas() {
