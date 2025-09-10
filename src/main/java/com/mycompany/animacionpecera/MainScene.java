@@ -9,12 +9,12 @@ import com.mycompany.animacionpecera.Components.CircleCollider;
 import com.mycompany.animacionpecera.System.RenderSystem;
 import com.mycompany.animacionpecera.System.MovementSystem;
 import com.mycompany.animacionpecera.Components.VelocityComponent;
-import com.mycompany.animacionpecera.Components.ColliderComponent;
 import com.mycompany.animacionpecera.Components.SpriteComponent;
 import com.mycompany.animacionpecera.Components.Transform;
-import com.mycompany.animacionpecera.System.CanvasBounceAndRotationSystem;
+import com.mycompany.animacionpecera.System.CanvasBounceSystem;
 import com.mycompany.animacionpecera.System.DebugCollisionRender;
 import com.mycompany.animacionpecera.System.GameSystem;
+import com.mycompany.animacionpecera.System.VelocitySystem;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -59,15 +59,17 @@ public class MainScene extends Application {
         final int initialFishes = 22;
         initialize(initialFishes);
 
-        CanvasBounceAndRotationSystem canvasSystem = new CanvasBounceAndRotationSystem(canvasWidth, canvasHeight);
+        CanvasBounceSystem canvasSystem = new CanvasBounceSystem(canvasWidth, canvasHeight);
         MovementSystem movement = new MovementSystem();
         RenderSystem render = new RenderSystem(canvas);
+        VelocitySystem vel = new VelocitySystem();
         DebugCollisionRender debug = new DebugCollisionRender(canvas);
 
         //add systems to the list
         systems.add(movement);
         systems.add(render);
         systems.add(canvasSystem);
+        systems.add(vel);
         systems.add(debug);
 
         //Creates the game loop

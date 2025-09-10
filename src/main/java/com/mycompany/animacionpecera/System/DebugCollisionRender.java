@@ -6,7 +6,6 @@ package com.mycompany.animacionpecera.System;
 
 import com.mycompany.animacionpecera.Components.BoxCollider;
 import com.mycompany.animacionpecera.Components.CircleCollider;
-import com.mycompany.animacionpecera.Components.ColliderComponent;
 import com.mycompany.animacionpecera.Components.Transform;
 import com.mycompany.animacionpecera.Entity;
 import java.util.List;

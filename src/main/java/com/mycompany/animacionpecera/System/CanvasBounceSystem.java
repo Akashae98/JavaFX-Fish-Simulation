@@ -18,12 +18,12 @@ import java.util.List;
  *
  * @author carol
  */
-public class CanvasBounceAndRotationSystem extends GameSystem {
+public class CanvasBounceSystem extends GameSystem {
 
     private final double canvasWidth;
     private final double canvasHeight;
 
-    public CanvasBounceAndRotationSystem(double canvasWidth, double canvasHeight) {
+    public CanvasBounceSystem(double canvasWidth, double canvasHeight) {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
     }
@@ -46,20 +46,7 @@ public class CanvasBounceAndRotationSystem extends GameSystem {
                     }
 
                 } else if (entity.hasComponent(SpriteComponent.class)) {
-                    SpriteComponent sprite = entity.getComponent(SpriteComponent.class);
                     handleBounce(transform, velocity, boxCollider);
-
-                        // horizontal flip
-                        sprite.flip = velocity.velX > 0;
-
-                        // rotation
-                        if ((velocity.velY > 0 && velocity.velX > 0) || (velocity.velY < 0 && velocity.velX < 0)) {
-                            transform.setRotation(Math.toRadians(10));
-                        } else if ((velocity.velY < 0 && velocity.velX > 0) || (velocity.velY > 0 && velocity.velX < 0)) {
-                            transform.setRotation(Math.toRadians(-10));
-                        } else {
-                            transform.setRotation(0);
-                        }
 
                 }
             }
