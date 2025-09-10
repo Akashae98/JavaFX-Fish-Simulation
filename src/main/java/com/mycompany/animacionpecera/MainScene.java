@@ -3,14 +3,9 @@
  */
 package com.mycompany.animacionpecera;
 
-import com.mycompany.animacionpecera.Components.BoxCollider;
-import com.mycompany.animacionpecera.Components.Bubble;
-import com.mycompany.animacionpecera.Components.CircleCollider;
+import com.mycompany.animacionpecera.Components.*;
 import com.mycompany.animacionpecera.System.RenderSystem;
 import com.mycompany.animacionpecera.System.MovementSystem;
-import com.mycompany.animacionpecera.Components.VelocityComponent;
-import com.mycompany.animacionpecera.Components.SpriteComponent;
-import com.mycompany.animacionpecera.Components.Transform;
 import com.mycompany.animacionpecera.System.CanvasBounceSystem;
 import com.mycompany.animacionpecera.System.DebugCollisionRender;
 import com.mycompany.animacionpecera.System.GameSystem;
@@ -114,8 +109,8 @@ public class MainScene extends Application {
         canvas.setOnMouseClicked(e
                 -> {
             Position position = new Position(e.getX(), e.getY());
-            //addFish(position);
-            addCoralECS(position);
+            //addCoralECS(position);
+            addMulticolorFish(position);
         }
         );
 
@@ -140,6 +135,7 @@ public class MainScene extends Application {
         for (int i = 0; i < fishes; i++) {
             Position position = getRandomPoint();
             addCoralECS(position);
+            addMulticolorFish(position);
         }
 
         // little bubbles
@@ -194,6 +190,31 @@ public class MainScene extends Application {
         fish.add(sprite);
         double width = ImageManager.getInstance().getWidth("coralfish");
         double height = ImageManager.getInstance().getHeight("coralfish");
+        fish.add(new BoxCollider(width, height));
+        double velx = Math.random() * 80 - 40;
+        double vely = Math.random() * 80 - 40;
+        fish.add(new VelocityComponent(velx, vely));
+
+        entities.add(fish);
+    }
+    public void addMulticolorFish(Position pos) {
+        Entity fish = new Entity();
+        double scale = 0.3 + random.nextDouble(0.5);
+        Transform transform = new Transform(pos.x(), pos.y(),0, scale, scale);
+        fish.add(transform);
+
+        String imageKey = "multicolorfish";
+        if (!ImageManager.getInstance().hasImage(imageKey)) {
+            ImageManager.getInstance().loadImage(imageKey, "/Images/pink_fish.png");
+        }
+
+        SpriteComponent sprite = new SpriteComponent("multicolorfish");
+        fish.add(sprite);
+        RandomColor randomColor = new RandomColor();
+        MulticolorFish multi = new MulticolorFish(randomColor.getColor());
+        fish.add(multi);
+        double width = ImageManager.getInstance().getWidth("multicolorfish");
+        double height = ImageManager.getInstance().getHeight("multicolorfish");
         fish.add(new BoxCollider(width, height));
         double velx = Math.random() * 80 - 40;
         double vely = Math.random() * 80 - 40;
