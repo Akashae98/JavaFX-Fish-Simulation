@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Principal Class wich creates the window and the canvas to draw the animation.
+ * Principal Class which creates the window and the canvas to draw the animation.
  * Controls the animation of fishes and bubbles. You can add fishes with a click
  * on the mousse.
  */
@@ -32,8 +32,6 @@ public class MainScene extends Application {
     public static final int canvasHeight = 1200;
     public static final Random random = new Random();
 
-    BoundingBox canvasBox = new BoundingBox(new Position(0, 0), new Position(canvasWidth, 0),
-            new Position(canvasWidth, canvasHeight), new Position(0, canvasHeight));
     List<Entity> entities = new ArrayList<>();
     List<GameSystem> systems = new ArrayList<>();
 
