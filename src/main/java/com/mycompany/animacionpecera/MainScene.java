@@ -16,6 +16,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
@@ -188,31 +189,39 @@ public class MainScene extends Application {
         fish.add(sprite);
         double width = ImageManager.getInstance().getWidth("coralfish");
         double height = ImageManager.getInstance().getHeight("coralfish");
-        fish.add(new BoxCollider(width, height));
-        double velx = Math.random() * 80 - 40;
-        double vely = Math.random() * 80 - 40;
-        fish.add(new VelocityComponent(velx, vely));
-
-        entities.add(fish);
+        physics(fish, width, height);
     }
+
     public void addMulticolorFish(Position pos) {
         Entity fish = new Entity();
         double scale = 0.3 + random.nextDouble(0.5);
-        Transform transform = new Transform(pos.x(), pos.y(),0, scale, scale);
+        Transform transform = new Transform(pos.x(), pos.y(), 0, scale, scale);
         fish.add(transform);
 
-        String imageKey = "multicolorfish";
-        if (!ImageManager.getInstance().hasImage(imageKey)) {
-            ImageManager.getInstance().loadImage(imageKey, "/Images/pink_fish.png");
+        if (!ImageManager.getInstance().hasImage("multicolorfish")) {
+            ImageManager.getInstance().loadImage("multicolorfish", "/Images/pink_fish.png");
+        }
+        if (!ImageManager.getInstance().hasImage("redfish")) {
+            ImageManager.getInstance().loadImage("redfish", "/Images/red_fish.png");
         }
 
-        SpriteComponent sprite = new SpriteComponent("multicolorfish");
-        fish.add(sprite);
-        RandomColor randomColor = new RandomColor();
-        MulticolorFish multi = new MulticolorFish(randomColor.getColor());
+        Color color = new RandomColor().getColor();
+        String imageKey;
+        MulticolorFish multi = new MulticolorFish(color);
+        if (multi.isPinkHue() || multi.isTurquoiseHue() || multi.isPurpleHue()) {
+            imageKey = "multicolorfish";
+        } else {
+            imageKey = "redfish";
+        }
         fish.add(multi);
-        double width = ImageManager.getInstance().getWidth("multicolorfish");
-        double height = ImageManager.getInstance().getHeight("multicolorfish");
+        SpriteComponent sprite = new SpriteComponent(imageKey);
+        fish.add(sprite);
+        double width = ImageManager.getInstance().getWidth(imageKey);
+        double height = ImageManager.getInstance().getHeight(imageKey);
+        physics(fish, width, height);
+    }
+
+    private void physics(Entity fish, double width, double height) {
         fish.add(new BoxCollider(width, height));
         double velx = Math.random() * 80 - 40;
         double vely = Math.random() * 80 - 40;

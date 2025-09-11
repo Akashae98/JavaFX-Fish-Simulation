@@ -7,18 +7,15 @@ package com.mycompany.animacionpecera.System;
 import com.mycompany.animacionpecera.Components.Bubble;
 import com.mycompany.animacionpecera.Components.MulticolorFish;
 import com.mycompany.animacionpecera.Components.SpriteComponent;
-import com.mycompany.animacionpecera.Entity;
 import com.mycompany.animacionpecera.Components.Transform;
+import com.mycompany.animacionpecera.Entity;
 import com.mycompany.animacionpecera.ImageManager;
-import java.util.List;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Paint;
-import javafx.scene.paint.Stop;
+import javafx.scene.paint.*;
+
+import java.util.List;
 
 /**
  *
@@ -61,7 +58,7 @@ public class RenderSystem extends GameSystem {
             //to manually draw the oval, we need to apply the scale without affine
             double widthDraw = image.getWidth() * transform.getScaleX();
 
-            //a white circle to highlight the bubbles..?
+            //a white circle to highlight the bubbles…?
             if (entity.hasComponent(Bubble.class)) {
                 gc.setFill(Color.rgb(255, 255, 255, 0.3));
                 gc.fillOval(transform.getX() - widthDraw / 2,
@@ -70,26 +67,16 @@ public class RenderSystem extends GameSystem {
                 gc.strokeOval(transform.getX() - widthDraw / 2,
                         transform.getY() - widthDraw / 2, widthDraw, widthDraw);
             }
-            if (entity.hasComponent(SpriteComponent.class) && entity.hasComponent(MulticolorFish.class)) {
-                gc.save();
-                MulticolorFish multicolorFish = entity.getComponent(MulticolorFish.class);
-                gc.setEffect(null);
-                gc.setEffect(multicolorFish.getColorEffect());
-
-                // applies to translate and rotation
-                gc.setTransform(getAffineTransform(transform));
-
-                if (sprite.flip) {
-                    gc.scale(-1, 1);
-                }
-
-                gc.drawImage(image, -width / 2, -height / 2, width, height);
-
-                gc.restore();
-
-            } else if (entity.hasComponent(Transform.class) && entity.hasComponent(SpriteComponent.class)) {
+            if (entity.hasComponent(Transform.class) && entity.hasComponent(SpriteComponent.class)) {
                 //save gc state
                 gc.save();
+                gc.setEffect(null);
+
+                // Apply color effect for MulticolorFish
+                if (entity.hasComponent(MulticolorFish.class)) {
+                    MulticolorFish multicolorFish = entity.getComponent(MulticolorFish.class);
+                    gc.setEffect(multicolorFish.getColorEffect());
+                }
 
                 // applies to translate and rotation
                 gc.setTransform(getAffineTransform(transform));

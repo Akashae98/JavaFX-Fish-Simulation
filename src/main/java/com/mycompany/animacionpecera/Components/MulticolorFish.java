@@ -1,17 +1,18 @@
 package com.mycompany.animacionpecera.Components;
 import java.util.Random;
+import com.mycompany.animacionpecera.MainScene;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.paint.Color;
 
 public class MulticolorFish extends Component{
 
     private final double hue;
-    private final double RandomHue;
+    private final double randomHue;
     private final ColorAdjust colorEffect;
-    Random random = new Random();
+    Random random = MainScene.random;
 
     public MulticolorFish(Color color) {
-        this.RandomHue = random.nextDouble();
+        this.randomHue = random.nextDouble();
         this.hue = color.getHue();
         this.colorEffect = createColorEffect();
     }
@@ -27,20 +28,20 @@ public class MulticolorFish extends Component{
             colorAdjust.setBrightness(0.2);
 
         } else if (isPinkHue()) {
-            colorAdjust.setHue(0 + (RandomHue) * 0.3 - 0.1);//ajusted pink
+            colorAdjust.setHue(0 + (randomHue) * 0.3 - 0.1);//adjusted pink
             colorAdjust.setSaturation(0.45);
             colorAdjust.setBrightness(0.35);
 
         } else if (isPurpleHue()) {
-            colorAdjust.setHue(0 - (RandomHue) * 0.5);//ajusted purples anb blues
+            colorAdjust.setHue(0 - (randomHue) * 0.5);//adjusted purples anb blues
             colorAdjust.setSaturation(0.40);
             colorAdjust.setBrightness(0.30);
 
         } else {
             // Coral to golden colors
-            colorAdjust.setHue(RandomHue * 0.12);
-            colorAdjust.setSaturation(0.60);
-            colorAdjust.setBrightness(0.25);
+            colorAdjust.setHue(randomHue * 0.12);
+            colorAdjust.setSaturation(0.55);
+            colorAdjust.setBrightness(0.15);
 
         }
         return colorAdjust;
