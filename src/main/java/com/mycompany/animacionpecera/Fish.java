@@ -7,7 +7,6 @@ package com.mycompany.animacionpecera;
 /**
  * This class manages the position, movement and animation of different
  * fishes...
- *
  */
 public class Fish extends SceneObject {
 

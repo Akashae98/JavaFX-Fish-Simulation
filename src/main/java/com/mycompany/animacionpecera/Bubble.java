@@ -5,13 +5,12 @@
 package com.mycompany.animacionpecera;
 
 /**
- *
  * @author ivani
  */
 public class Bubble extends SceneObject {
 
     public Bubble(double size, Position position,
-            Animation animationType, Movement movementType) {
+                  Animation animationType, Movement movementType) {
         super(position, animationType, movementType);
     }
 

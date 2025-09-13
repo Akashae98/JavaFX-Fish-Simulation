@@ -10,8 +10,9 @@ package com.mycompany.animacionpecera;
  * - A canonical constructor with all fields
  * - Getter methods
  * - equals(), hashCode(), and toString() methods
- *
+ * <p>
  * You can define your own constructor for validation or custom logic!
+ *
  * @author carol
  */
 public record Direction(double dx, double dy) {

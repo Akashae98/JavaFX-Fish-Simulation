@@ -5,24 +5,25 @@
 package com.mycompany.animacionpecera;
 
 import java.util.Random;
+
 import javafx.scene.paint.Color;
+
 /**
- *
  * @author User
  */
 public class RandomColor {
-    
+
     public Color color;
     private static final Random random = MainScene.random;
 
     public RandomColor() {
         this.color = colorGenerator();
     }
-    
+
     public Color getColor() {
         return color;
     }
-    
+
     private Color colorGenerator() {
         int selector = random.nextInt(4);//selects between 0, 1 o 2
 
@@ -48,6 +49,6 @@ public class RandomColor {
             default:
                 return Color.CORAL;
         }
-    } 
-   
+    }
+
 }

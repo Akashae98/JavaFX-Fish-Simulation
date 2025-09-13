@@ -10,7 +10,7 @@ package com.mycompany.animacionpecera;
  * boundaries of the box.
  */
 public record BoundingBox(Position topLeft, Position topRight,
-        Position bottomRight, Position bottomLeft) {
+                          Position bottomRight, Position bottomLeft) {
 
     // Checks if a given point is inside this bounding box.
     public boolean isInside(Position point) {

@@ -5,7 +5,6 @@
 package com.mycompany.animacionpecera;
 
 /**
- *
  * @author carol
  */
 public class LoopOutOfBoundsMovement extends Movement {

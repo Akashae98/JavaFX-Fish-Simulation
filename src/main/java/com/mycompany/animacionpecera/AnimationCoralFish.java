@@ -8,7 +8,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- *
  * @author User
  */
 public class AnimationCoralFish extends Animation {

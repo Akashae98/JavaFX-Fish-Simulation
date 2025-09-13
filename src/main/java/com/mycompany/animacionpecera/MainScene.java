@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -43,12 +44,12 @@ public class MainScene extends Application {
     public void start(Stage stage) {
         // Canvas habilitates to draw
         Canvas canvas = new Canvas(canvasWidth, canvasHeight);
-        
+
         //gc its the brush to paint in the Canvas, harcoded for each canvas
         gc = canvas.getGraphicsContext2D();
 
         // At initiate add scene objects
-        final int initialFishes = 5;
+        final int initialFishes = 27;
         initializeSceneObjects(initialFishes);
 
         //Creates the game loop
@@ -58,11 +59,11 @@ public class MainScene extends Application {
         Button toggleBoxButton = new Button("Show Boxes");
         toggleBoxButton.setStyle(
                 "-fx-background-color: #e0aee0; "
-                + "-fx-text-fill: white; "
-                + "-fx-font-weight: bold; "
-                + "-fx-background-radius: 10; "
-                + "-fx-margin-left: 5; "
-                + "-fx-padding: 10 10;"
+                        + "-fx-text-fill: white; "
+                        + "-fx-font-weight: bold; "
+                        + "-fx-background-radius: 10; "
+                        + "-fx-margin-left: 5; "
+                        + "-fx-padding: 10 10;"
         );
         toggleBoxButton.setOnAction(e -> {
             boolean newShowBox = !gameLoop.isShowBox();
@@ -73,11 +74,11 @@ public class MainScene extends Application {
         Button playPauseButton = new Button("Pause");
         playPauseButton.setStyle(
                 "-fx-background-color: #aee0ae; "
-                + "-fx-text-fill: white; "
-                + "-fx-font-weight: bold; "
-                + "-fx-background-radius: 10; "
-                + "-fx-margin: 5; "
-                + "-fx-padding: 10 10;"
+                        + "-fx-text-fill: white; "
+                        + "-fx-font-weight: bold; "
+                        + "-fx-background-radius: 10; "
+                        + "-fx-margin: 5; "
+                        + "-fx-padding: 10 10;"
         );
 
         playPauseButton.setOnAction(e -> {
@@ -91,13 +92,13 @@ public class MainScene extends Application {
 
         // User interaction: adds fishes with a click
         canvas.setOnMouseClicked(e
-                -> {
-            Position position = new Position(e.getX(), e.getY());
-            addFish(position);
-            addCoralFish(position);
-        }
+                        -> {
+                    Position position = new Position(e.getX(), e.getY());
+                    addFish(position);
+                    addCoralFish(position);
+                }
         );
-        
+
         // Horizontal layout contains the buttons
         HBox buttonLayout = new HBox();
         buttonLayout.getChildren().addAll(toggleBoxButton, playPauseButton);
@@ -119,6 +120,9 @@ public class MainScene extends Application {
         for (int i = 0; i < fishes; i++) {
             Position position = getRandomPoint();
             addFish(position);
+        }
+
+        for (int i = 0; i < fishes/3; i++) {
             Position position2 = getRandomPoint();
             addCoralFish(position2);
         }
@@ -152,11 +156,10 @@ public class MainScene extends Application {
     //creates normal fishes
     public void addFish(Position position) {
         RandomColor randomColor = new RandomColor();
-        Animation anim = new AnimationFishIdle(0.5 + random.nextDouble(1),
-                random.nextBoolean(), randomColor.getColor());
+        Animation anim = new AnimationFishIdle(0.3 + random.nextDouble(0.5), randomColor.getColor());
 
-        double dx = Math.random() * 80 - 1;
-        double dy = Math.random() * 80 - 1;
+        double dx = Math.random() * 80 - 40;
+        double dy = Math.random() * 80 - 40;
 
         Direction direction = new Direction(dx, dy);
         Movement movement = new LoopOutOfBoundsMovement(new LinearMovement(direction), canvasBox);
@@ -167,8 +170,8 @@ public class MainScene extends Application {
     public void addCoralFish(Position position) {
         Animation anim_coral = new AnimationCoralFish(0.3 + random.nextDouble(0.5));
 
-        double dx = Math.random() * 80 - 1;
-        double dy = Math.random() * 80 - 1;
+        double dx = Math.random() * 80 - 40;
+        double dy = Math.random() * 80 - 40;
 
         Direction direction = new Direction(dx, dy);
         Movement movement = new MovementRebound(new LinearMovement(direction), canvasBox);

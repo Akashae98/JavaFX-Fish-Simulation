@@ -7,7 +7,6 @@ package com.mycompany.animacionpecera;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
- *
  * @author carol
  */
 public abstract class SceneObject {

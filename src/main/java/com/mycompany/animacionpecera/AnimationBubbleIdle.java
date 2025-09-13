@@ -8,7 +8,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 /**
- *
  * @author User
  */
 public class AnimationBubbleIdle extends Animation {
