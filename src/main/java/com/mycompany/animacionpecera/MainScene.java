@@ -24,7 +24,7 @@ import java.util.Random;
 public class MainScene extends Application {
 
     public static final int canvasWidth = 1520;
-    public static final int canvasHeight = 780;
+    public static final int canvasHeight = 900;
     public static final Random random = new Random();
 
     private GraphicsContext gc; //Graphic context to draw in the canvas
