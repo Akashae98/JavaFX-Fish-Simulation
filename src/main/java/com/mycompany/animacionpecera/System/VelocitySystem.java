@@ -15,9 +15,6 @@ import java.util.List;
  */
 public class VelocitySystem extends GameSystem {
 
-    public VelocitySystem() {
-    }
-    
 
     @Override
     public void update(List<Entity> entities, double deltaTime) {
