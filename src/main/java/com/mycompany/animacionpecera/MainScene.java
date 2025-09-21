@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Principal Class wich creates the window and the canvas to draw the animation.
+ * Principal Class which creates the window and the canvas to draw the animation.
  * Controls the animation of fishes and bubbles. You can add fishes with a click
  * on the mousse.
  */
@@ -45,7 +45,7 @@ public class MainScene extends Application {
         // Canvas habilitates to draw
         Canvas canvas = new Canvas(canvasWidth, canvasHeight);
 
-        //gc its the brush to paint in the Canvas, harcoded for each canvas
+        //gc it's the brush to paint in the Canvas, hardcoded for each canvas
         gc = canvas.getGraphicsContext2D();
 
         // At initiate add scene objects

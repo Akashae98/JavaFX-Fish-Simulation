@@ -1,28 +1,81 @@
-# Pecera
+# Version 1: Composition Strategy Pattern
 
-This project is an animated aquarium simulation built with JavaFX.
+---
+## Technical Architecture
 
-### Requirements:
+### Core Design Principle: Composition over Inheritance
+The system uses dependency injection and composition instead of deep inheritance hierarchies. Behaviors are injected into entities through constructors.
 
-As its created in maven, we need to use the pom.xml to execute the libraries of JavaFX (this is required for JDK 9 and
-above).
-Inside the pom.xml we have a plugin that manages and executes the libraries.
+---
+## Architectural Components
 
-#### For netbeans
+### Abstract Base Classes
 
-We also need the nbaction.xml that triggers the plugin when running the application.
+#### Animation
+Defines rendering contract:
+- `draw(GraphicsContext gc, Position position)`
+- `getBoundingBox(Position position)`
 
-#### For IntelJ
+#### Movement
+Defines movement contract:
+- `nextPosition(SceneObject current, double deltaTime)`
 
-Dont execute project from Run. Execute javafx:run from maven.
+---
+### Concrete Implementations
 
-###### Alternative to maven.
+#### Animation Types
+- **AnimationBubbleIdle**: Bubble rendering with circular shape
+- **AnimationCoralFish**: Fish rendering with image assets
+- **AnimationFishIdle**: Additional fish animation variant
 
-Execute "scripts/javafx_vm_opts".
+#### Movement Types
+- **LinearMovement**: Straight-line movement with direction
+- **MovementRebound**: Bouncing behavior on boundaries
+- **LoopOutOfBoundsMovement**: Wrapping around screen edges
 
-Use the correct script depending on your operating system. Copy the result.
+### Entity Classes
+- **SceneObject**: Base class managing state and behavior coordination
+- **Fish**: Concrete entity using injected Animation/Movement
+- **Bubble**: Concrete entity using injected Animation/Movement
 
-Create a Run Configuration of type Application. Paste to "Vm options" the previous line.
+### Value Objects (Records)
+- **Position**: Immutable coordinate container
+- **Direction**: Immutable direction vector
+- **BoundingBox**: Immutable collision boundary definition
 
-With this configuration, JARs are imported automatically, ignoring Maven altogether.
-If more modules are used, you have to add them manually.
+### System Components
+- **GameLoop** (extends AnimationTimer): Main game loop implementation
+- **MainScene** (extends Application): JavaFX application setup
+- **DebugUtil**: Debugging and development utilities
+- **RandomColor**: Color generation utility
+
+---
+## SOLID Principles Implementation
+
+1. **Single Responsibility**: Each Movement class handles specific movement logic; Each Animation class handles specific rendering logic; SceneObject manages coordination only
+
+2. **Open/Closed**: New behaviors added via new Animation/Movement implementations; No modification required to existing classes
+
+3. **Liskov Substitution**: All Animation subtypes interchangeable; All Movement subtypes interchangeable
+
+4. **Interface Segregation**: Animation focuses only on rendering concerns; Movement focuses only on movement concerns
+
+5. **Dependency Inversion**: SceneObject depends on Animation/Movement abstractions; Concrete implementations injected through constructor
+
+## Usage Pattern
+
+```java
+// Create specific behaviors
+Animation animation = new AnimationCoralFish(30.0);
+Movement movement = new MovementRebound();
+
+// Inject dependencies at construction
+Fish fish = new Fish(position, movement, animation);
+```
+---
+## Key Benefits
+
+- **Testability**: Each component can be tested independently
+- **Flexibility**: Easy to create new entity combinations
+- **Maintainability**: Clear separation of concerns
+- **Extensibility**: New behaviors don't affect existing code
