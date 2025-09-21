@@ -5,7 +5,7 @@
 package com.mycompany.animacionpecera.System;
 
 import com.mycompany.animacionpecera.Components.Bubble;
-import com.mycompany.animacionpecera.Components.MulticolorFish;
+import com.mycompany.animacionpecera.Components.ColorSprite;
 import com.mycompany.animacionpecera.Components.SpriteComponent;
 import com.mycompany.animacionpecera.Components.Transform;
 import com.mycompany.animacionpecera.Entity;
@@ -71,11 +71,10 @@ public class RenderSystem extends GameSystem {
                 //save gc state
                 gc.save();
                 gc.setEffect(null);
-
-                // Apply color effect for MulticolorFish
-                if (entity.hasComponent(MulticolorFish.class)) {
-                    MulticolorFish multicolorFish = entity.getComponent(MulticolorFish.class);
-                    gc.setEffect(multicolorFish.getColorEffect());
+                // Apply color effect for ColorSprite
+                if (entity.hasComponent(ColorSprite.class)) {
+                    ColorSprite colorSprite = entity.getComponent(ColorSprite.class);
+                    gc.setEffect(colorSprite.getColorEffect());
                 }
 
                 // applies to translate and rotation

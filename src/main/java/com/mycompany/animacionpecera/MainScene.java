@@ -207,8 +207,8 @@ public class MainScene extends Application {
 
         Color color = new RandomColor().getColor();
         String imageKey;
-        MulticolorFish multi = new MulticolorFish(color);
-        if (multi.isPinkHue() || multi.isTurquoiseHue() || multi.isPurpleHue()) {
+        ColorSprite multi = new ColorSprite(color, random.nextDouble());
+        if (multi.getHueType().equals("TURQUOISE") || multi.getHueType().equals("PINK") || multi.getHueType().equals("PURPLE")) {
             imageKey = "multicolorfish";
         } else {
             imageKey = "redfish";
