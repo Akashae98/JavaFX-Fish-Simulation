@@ -1,2 +1,5 @@
 /target/
 .idea/
+/.run/Main Scene.run.xml
+nbactions.xml
+nb-configuration.xml
