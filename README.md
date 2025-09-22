@@ -25,21 +25,6 @@
 | **v1.1** | [`quantum_experiment`](../../tree/quantum_experiment) | ⚛️ Quantum Randomness | Real quantum numbers from ANU API (baaed on v.1.0)| ✅ Complete |
 | **v2.0** | [`ECS`](../../tree/ECS_%2333) | 🏗️ ECS Architecture | Pure Entity-Component-System for data-oriented design | 🚧 In Progress |
 
-### 🔄 Quick Branch Navigation
-```bash
-# Switch to Version 1 - Composition & Strategy
-git checkout version-1
-
-# Switch to Version 1.1 - Quantum Experiment  
-git checkout quantum_experiment
-
-# Switch to Version 2 - ECS Architecture
-git checkout "ECS_#33"
-
-# Return to main branch
-git checkout main
-```
-
 ---
 
 ## 🧩 Architectural Evolution
