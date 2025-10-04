@@ -9,9 +9,14 @@
 
 *A simulation that explores software architecture paradigms and integrates real quantum randomness.*
 
+
+![demo-peceraa](https://github.com/user-attachments/assets/3c0c5256-a54f-4c06-9761-1fe992b2cc79)
+
 </div>
 
+
 ---
+
 
 ## 🚀 Project Evolution & Learning Goals
 
@@ -187,7 +192,7 @@ If you prefer to use IntelliJ's run configuration instead of Maven:
 Each version branch contains its own source code, resources, and implementation details:
 
 - 🏗️ **Architecture implementation** - See how each design pattern is applied
-- ⚡ **Specific execution setup** - Maven configuration and dependencies for that version  
+- ⚡ **Specific execution setup** - Maven configuration and dependencies  
 - 🎯 **Code examples** - Real implementations of the architectural concepts
 - 📁 **Project structure** - How components are organized in each approach
 
